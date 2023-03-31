@@ -1,0 +1,83 @@
+package com.softech.ServiceImpl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.softech.Entity.adDocuments;
+import com.softech.Entity.orderHeader;
+import com.softech.Entity.productInfo;
+import com.softech.Entity.rdDocuments;
+import com.softech.Repository.adDocumentRepo;
+import com.softech.Repository.orderHeaderRepository;
+import com.softech.Repository.productInfoRepo;
+import com.softech.Repository.rdDocumentRepo;
+import com.softech.Service.orderService;
+
+@Service
+public class orderServiceImpl implements orderService {
+
+	@Autowired
+	private orderHeaderRepository orderRepo;
+
+	@Autowired
+	private productInfoRepo productRepo;
+
+	@Autowired
+	private adDocumentRepo AdDocuments;
+
+	@Autowired
+	private rdDocumentRepo rdDocuments;
+
+	@Override
+	public orderHeader addOrder(orderHeader order) {
+		orderHeader save = orderRepo.save(order);
+		return save;
+	}
+
+	@Override
+	public productInfo addProduct(productInfo product) {
+		productInfo productInfo = productRepo.save(product);
+		return productInfo;
+	}
+
+	@Override
+	public adDocuments ADdocumentsGenerateAndPersist(orderHeader order) {
+		adDocuments adD = new adDocuments();
+
+		productInfo storeProductNumber = productRepo.findByproductNumber(order.getOrderItems().getProductNumber());
+
+		if (storeProductNumber.getProductQty() >= order.getOrderItems().getOrderQty()) {
+
+			adD.setAcknowledgementsType("AD");
+			adD.setUserName(order.getUserName());
+			adD.setPurchaseOrderNumber(order.getPurchaseOrderNumber());
+			adD.setOrderItems(order.getOrderItems());
+
+			int totalQty = 0;
+			if (storeProductNumber.getProductQty() > order.getOrderItems().getOrderQty()) {
+				totalQty = storeProductNumber.getProductQty() - order.getOrderItems().getOrderQty();
+				totalQty = storeProductNumber.getProductQty() - order.getOrderItems().getOrderQty();
+			}
+			storeProductNumber.setProductQty(totalQty);;
+
+			AdDocuments.save(adD);
+
+		} else {
+			this.RDdocumentsGenerateAndPersist(order);
+		}
+		return adD;
+	}
+
+	@Override
+	public rdDocuments RDdocumentsGenerateAndPersist(orderHeader order) {
+		rdDocuments rdD = new rdDocuments();
+		rdD.setAcknowledgementsType("RD");
+		rdD.setUserName(order.getUserName());
+		rdD.setPurchaseOrderNumber(order.getPurchaseOrderNumber());
+		rdD.setOrderItems(order.getOrderItems());
+		rdDocuments.save(rdD);
+
+		return rdD;
+	}
+
+}

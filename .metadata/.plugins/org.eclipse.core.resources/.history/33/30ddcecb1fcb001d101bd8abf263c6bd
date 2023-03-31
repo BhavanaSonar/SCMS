@@ -1,0 +1,17 @@
+package com.softech.mainController;
+
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.softech.Entity.orderHeader;
+
+public class bsController {
+	
+	public orderHeader home(@RequestBody orderHeader order) {
+		
+		
+		
+		return order;
+		
+	}
+
+}

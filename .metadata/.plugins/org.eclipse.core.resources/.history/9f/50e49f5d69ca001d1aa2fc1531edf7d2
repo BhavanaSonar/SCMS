@@ -1,0 +1,11 @@
+package com.softech.Entity;
+
+public class orderItems {
+	
+	private Long id;
+	private Long productNumber;
+	private String productName;
+	private int productQty;
+	private Long productPrice;
+
+}

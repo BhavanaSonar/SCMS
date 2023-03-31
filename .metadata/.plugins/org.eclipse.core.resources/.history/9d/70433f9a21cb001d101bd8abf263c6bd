@@ -1,0 +1,23 @@
+package com.softech.mainController;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.softech.Entity.orderHeader;
+import com.softech.bsService.Service;
+
+public class bsController {
+	@Autowired
+	private Service service;
+	
+	@PostMapping("/save")
+	public orderHeader home(@RequestBody orderHeader order) {
+		
+		service.saveOrder(order)
+		
+		return order;
+		
+	}
+
+}

@@ -1,0 +1,16 @@
+package com.softech.ServiceImpl;
+
+import com.softech.Entity.orderHeader;
+import com.softech.Service.orderService;
+
+public class orderServiceImpl implements orderService{
+
+	@Override
+	public orderHeader addorder(orderHeader order) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+
+}

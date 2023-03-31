@@ -1,0 +1,9 @@
+package com.softech.Repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.softech.Entity.address;
+
+public interface addressRepository extends JpaRepository<address, Long> {
+
+}

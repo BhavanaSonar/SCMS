@@ -1,0 +1,7 @@
+package com.softech.Repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface orderHeaderRepository extends JpaRepository<T, ID> {
+
+}
